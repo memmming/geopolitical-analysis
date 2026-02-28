@@ -1,6 +1,7 @@
 """
 Configuration file for Geopolitical Intelligence Analysis System
 """
+import os
 from dataclasses import dataclass
 from typing import List, Tuple
 from pathlib import Path
@@ -45,7 +46,7 @@ CHART_KEYWORD_COUNT = 5  # Top N keywords for chart
 CHART_SOURCE_COUNT = 5  # Top N sources for chart
 
 # 代理配置
-# 本地开发：设置 USE_PROXY=true 或在 .env 中配置
-# GitHub Actions：默认禁用（海外服务器直连）
+# 本地开发：USE_PROXY = True（使用本地代理）
+# GitHub Actions：通过环境变量 USE_PROXY=false 覆盖
 PROXY_URL = os.getenv("PROXY_URL", "")
-USE_PROXY = os.getenv("USE_PROXY", "false").lower() == "true"
+USE_PROXY = os.getenv("USE_PROXY", "true").lower() == "true"  # 默认开启代理
