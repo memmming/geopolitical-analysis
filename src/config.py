@@ -44,6 +44,8 @@ MAX_CONCURRENT_FETCHES = 5  # Max parallel RSS fetches
 CHART_KEYWORD_COUNT = 5  # Top N keywords for chart
 CHART_SOURCE_COUNT = 5  # Top N sources for chart
 
-# V2Ray 代理配置
-PROXY_URL = ""  # V2Ray HTTP 代理端口
-USE_PROXY = True  # 是否启用代理
+# 代理配置
+# 本地开发：设置 USE_PROXY=true 或在 .env 中配置
+# GitHub Actions：默认禁用（海外服务器直连）
+PROXY_URL = os.getenv("PROXY_URL", "")
+USE_PROXY = os.getenv("USE_PROXY", "false").lower() == "true"

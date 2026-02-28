@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd C:\\\\proj datamining\\\\info_dyzz\\\\geopolitical-analysis:*)",
+      "Bash(cd:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(cd /c/\"proj datamining/info_dyzz/geopolitical-analysis\" && ./venv/Scripts/python.exe run.py --run --filter-hours 24 2>&1)",
+      "Bash(grep:*)"
+    ]
+  }
+}

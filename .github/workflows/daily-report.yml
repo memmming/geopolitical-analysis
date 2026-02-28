@@ -60,6 +60,7 @@ jobs:
         env:
           SCORE_THRESHOLD: ${{ github.event.inputs.score_threshold || '7' }}
           FILTER_HOURS: ${{ github.event.inputs.filter_hours || '24' }}
+          USE_PROXY: 'false'
         run: |
           python -m src.main --run --score $SCORE_THRESHOLD --filter-hours $FILTER_HOURS
 
