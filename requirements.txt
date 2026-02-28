@@ -6,6 +6,7 @@ python-dotenv==1.0.0
 # RSS Parsing
 feedparser==6.0.10
 aiohttp==3.9.1
+requests==2.31.0
 
 # Database
 sqlalchemy==2.0.23
