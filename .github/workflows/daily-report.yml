@@ -1,0 +1,72 @@
+name: Daily Geopolitical Intelligence Report
+
+on:
+  # 定时运行：每天8点、12点、16点、20点（北京时间）
+  # 北京时间 = UTC + 8
+  schedule:
+    - cron: '0 0 * * *'   # 北京时间 8:00
+    - cron: '0 4 * * *'   # 北京时间 12:00
+    - cron: '0 8 * * *'   # 北京时间 16:00
+    - cron: '0 12 * * *'  # 北京时间 20:00
+  # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      score_threshold:
+        description: 'Score threshold (5-10)'
+        required: false
+        default: '7'
+      filter_hours:
+        description: 'Filter hours for report (e.g., 24)'
+        required: false
+        default: '24'
+
+# 设置并发组，避免同时运行多个实例
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  run-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create environment file
+        run: |
+          cat > .env << EOF
+          DEEPSEEK_API_KEY=${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL=deepseek-reasoner
+          FEISHU_WEBHOOK_URL=${{ secrets.FEISHU_WEBHOOK_URL }}
+          EOF
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Run daily report
+        env:
+          SCORE_THRESHOLD: ${{ github.event.inputs.score_threshold || '7' }}
+          FILTER_HOURS: ${{ github.event.inputs.filter_hours || '24' }}
+        run: |
+          python -m src.main --run --score $SCORE_THRESHOLD --filter-hours $FILTER_HOURS
+
+      - name: Upload database as artifact (optional, for debugging)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geopolitical-db
+          path: data/geopolitical.db
+          retention-days: 7
