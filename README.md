@@ -72,13 +72,15 @@ pip install -r requirements.txt
 
 ### 4. 配置环境变量
 
-编辑 `.env` 文件（已预配置）：
+创建 `.env` 文件（不会被提交到Git）：
 
 ```env
-DEEPSEEK_API_KEY=REDACTED_API_KEY
+DEEPSEEK_API_KEY=你的DeepSeek_API密钥
 DEEPSEEK_MODEL=deepseek-reasoner
-FEISHU_WEBHOOK_URL=REDACTED_WEBHOOK
+FEISHU_WEBHOOK_URL=你的飞书Webhook_URL
 ```
+
+> **注意**: `.env` 文件包含敏感信息，已在 `.gitignore` 中排除，不会提交到GitHub。
 
 ## 使用方法
 
