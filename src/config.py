@@ -49,8 +49,7 @@ MAX_CONCURRENT_FETCHES = 5  # Max parallel RSS fetches
 CHART_KEYWORD_COUNT = 5  # Top N keywords for chart
 CHART_SOURCE_COUNT = 5  # Top N sources for chart
 
-# 代理配置
-# 本地开发：USE_PROXY = True（使用本地代理）
-# GitHub Actions：通过环境变量 USE_PROXY=false 覆盖
+# 代理配置 - 完全通过环境变量控制，不在代码中存储默认值
+# 本地使用：在 .env 文件中设置 PROXY_URL 和 USE_PROXY
 PROXY_URL = os.getenv("PROXY_URL", "")
-USE_PROXY = os.getenv("USE_PROXY", "true").lower() == "true"  # 默认开启代理
+USE_PROXY = os.getenv("USE_PROXY", "").lower() == "true"
