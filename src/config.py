@@ -2,9 +2,13 @@
 Configuration file for Geopolitical Intelligence Analysis System
 """
 import os
+from dotenv import load_dotenv
 from dataclasses import dataclass
 from typing import List, Tuple
 from pathlib import Path
+
+# Load environment variables from .env file
+load_dotenv()
 
 # RSS Sources - 10 international relations/security sources
 RSS_SOURCES: List[Tuple[str, str]] = [
@@ -21,15 +25,15 @@ RSS_SOURCES: List[Tuple[str, str]] = [
 ]
 
 # DeepSeek API Configuration
-DEEPSEEK_API_KEY = "REDACTED_API_KEY"
-DEEPSEEK_MODEL = "deepseek-reasoner"
-DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-reasoner")
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
 
 # Database Configuration
 DATABASE_PATH = Path(__file__).parent.parent / "data" / "geopolitical.db"
 
 # Feishu Webhook Configuration
-FEISHU_WEBHOOK_URL = "REDACTED_WEBHOOK"
+FEISHU_WEBHOOK_URL = os.getenv("FEISHU_WEBHOOK_URL", "")
 FEISHU_MESSAGE_TYPE = "text"
 
 # Analysis Thresholds
